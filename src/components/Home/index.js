@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./style.css";
+import StarRating from "../../assets/starRating";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -26,8 +27,16 @@ const Home = () => {
               <div className="product">
                 <img src={p.image} alt="image" />
                 <p>{p.title}</p>
-                <p>{p.category}</p>
+                <div className="rating">
+                  <StarRating rate={p.rating.rate} />
+                  <p style={{fontSize: '10px'}}>
+                    {p.rating.rate} ({p.rating.count})
+                  </p>
+                </div>
                 <p>R$ {p.price}</p>
+                <p style={{ fontSize: "12px", color: "green" }}>
+                  (10% de desconto no pix)
+                </p>
               </div>
             </div>
           ))}
