@@ -66,3 +66,11 @@ img {
 .right {
   right: 0;
 }
+
+
+.addShowcase {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: green;
+}

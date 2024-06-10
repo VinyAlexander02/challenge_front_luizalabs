@@ -53,6 +53,9 @@ const Home = () => {
         >
           &#10095;
         </button>
+        <button className="addShowcase">
+          + Adicionar Vitrine
+        </button>
       </div>
     </>
   );
