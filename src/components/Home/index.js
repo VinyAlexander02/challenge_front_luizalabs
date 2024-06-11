@@ -1,10 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./style.css";
 import StarRating from "../../assets/starRating";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
   const contentRef = useRef(null);
+
+  const navigate = useNavigate();
+
+  const handleAddShowcase = () => {
+    navigate('/add-showcase');
+  };
 
   useEffect(() => {
     fetch("https://fakestoreapi.com/products")
@@ -53,7 +60,7 @@ const Home = () => {
         >
           &#10095;
         </button>
-        <button className="addShowcase">
+        <button className="addShowcase" onClick={handleAddShowcase}>
           + Adicionar Vitrine
         </button>
       </div>
