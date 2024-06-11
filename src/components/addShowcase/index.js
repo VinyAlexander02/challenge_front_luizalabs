@@ -4,6 +4,8 @@ import { PiListThin } from "react-icons/pi";
 import { MdEdit } from "react-icons/md";
 import { GrDirections } from "react-icons/gr";
 import { MdOutlineClose } from "react-icons/md";
+import EditModal from "../modal";
+import { useNavigate } from "react-router-dom";
 
 const AddShowcase = () => {
   const [formData, setFormData] = useState({
@@ -29,6 +31,12 @@ const AddShowcase = () => {
     // Redirecione ou execute outras ações conforme necessário
   };
 
+  const navigate = useNavigate();
+
+  const handleAddShowcase = () => {
+    navigate("/add-showcase");
+  };
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -39,7 +47,7 @@ const AddShowcase = () => {
 
   return (
     <div>
-      <h2>Cadastro de Nova Vitrine</h2>
+      <h2>Vitrines</h2>
       <div className="showCase">
         <div>
           <PiListThin />
@@ -54,39 +62,43 @@ const AddShowcase = () => {
         </div>
       </div>
       {isModalOpen && (
-        <div className="modal">
-          <div className="modal-content">
-            <span className="close" onClick={closeModal}>
-              &times;
-            </span>
-            <form onSubmit={handleSubmit}>
-              <div className="modalName">
-                <label htmlFor="name">Nome:</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="description">Descrição:</label>
-                <textarea
-                  id="description"
-                  name="description"
-                  value={formData.description}
-                  onChange={handleChange}
-                  required
-                ></textarea>
-              </div>
-              {/* Adicione outros campos conforme necessário */}
-              <button type="submit">Salvar</button>
-            </form>
-          </div>
-        </div>
+        <EditModal open={isModalOpen} onClose={closeModal}/>
+        // <div className="modal">
+        //   <div className="modal-content">
+        //     <span className="close" onClick={closeModal}>
+        //       &times;
+        //     </span>
+        //     <form onSubmit={handleSubmit}>
+        //       <div className="modalName">
+        //         <label htmlFor="name">Nome:</label>
+        //         <input
+        //           type="text"
+        //           id="name"
+        //           name="name"
+        //           value={formData.name}
+        //           onChange={handleChange}
+        //           required
+        //         />
+        //       </div>
+        //       <div>
+        //         <label htmlFor="description">Descrição:</label>
+        //         <textarea
+        //           id="description"
+        //           name="description"
+        //           value={formData.description}
+        //           onChange={handleChange}
+        //           required
+        //         ></textarea>
+        //       </div>
+        //       {/* Adicione outros campos conforme necessário */}
+        //       <button type="submit">Salvar</button>
+        //     </form>
+        //   </div>
+        // </div>
       )}
+      <button className="addShowcase" onClick={handleAddShowcase}>
+          + Adicionar Vitrine
+        </button>
     </div>
   );
 };
