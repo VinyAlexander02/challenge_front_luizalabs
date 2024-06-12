@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
@@ -6,7 +6,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Grid, TextField } from "@mui/material";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -18,25 +18,65 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function editModal({ open, onClose }) {
-  const handleClose = () => {
+export default function EditModal({
+  open,
+  onClose,
+  vitrineId,
+  vitrineTitle,
+  vitrineProduct,
+  onUpdate,
+}) {
+  const [title, setTitle] = useState(vitrineTitle);
+  const [product, setProduct] = useState(vitrineProduct);
+
+  useEffect(() => {
+    setTitle(vitrineTitle);
+    setProduct(vitrineProduct);
+  }, [vitrineId, vitrineTitle, vitrineProduct]);
+
+  const handleSave = () => {
+    const updatedVitrine = {
+      title: title,
+      products: product,
+    };
+
+    onUpdate(vitrineId, updatedVitrine);
+
     onClose();
+  };
+
+  const handleUpdate = (vitrineId, updatedData) => {
+    fetch(`https://fakestoreapi.com/products/${vitrineId}`, {
+      method: "PUT",
+      body: JSON.stringify(updatedData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((updatedVitrine) => {
+        console.log("Vitrine atualizada:", updatedVitrine);
+        // Aqui você pode adicionar lógica para atualizar a vitrine na tela ou no localStorage, se necessário
+      })
+      .catch((error) => {
+        console.error("Erro ao atualizar vitrine:", error);
+      });
   };
 
   return (
     <BootstrapDialog
-      onClose={handleClose}
+      onClose={onClose}
       aria-labelledby="customized-dialog-title"
       open={open}
       fullWidth
-      maxWidth = 'lg'
+      maxWidth="lg"
     >
       <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
         Editar Vitrine
       </DialogTitle>
       <IconButton
         aria-label="close"
-        onClick={handleClose}
+        onClick={onClose}
         sx={{
           position: "absolute",
           left: 8,
@@ -48,7 +88,6 @@ export default function editModal({ open, onClose }) {
       </IconButton>
       <DialogContent dividers>
         <Grid container spacing={2}>
-          <p style={{fontSize: '12px', margin: '5px 20px', color: 'gray'}}> Codigo da vitrine: 21</p>
           <Grid item xs={12}>
             <TextField
               id="outlined-basic"
@@ -56,6 +95,8 @@ export default function editModal({ open, onClose }) {
               variant="outlined"
               required
               fullWidth
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
           </Grid>
           <Grid item xs={12}>
@@ -65,12 +106,14 @@ export default function editModal({ open, onClose }) {
               variant="outlined"
               required
               fullWidth
+              value={product}
+              onChange={(e) => setProduct(e.target.value)}
             />
           </Grid>
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button autoFocus onClick={handleClose}>
+        <Button autoFocus onClick={handleSave}>
           Salvar
         </Button>
       </DialogActions>

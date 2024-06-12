@@ -1,3 +1,5 @@
+// AddModal.js
+
 import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
@@ -8,7 +10,6 @@ import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Grid, TextField } from "@mui/material";
-import { v4 as uuidv4 } from 'uuid'; // Import the uuid library
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -19,39 +20,38 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function AddModal({ open, onClose, onSave }) {
+const AddModal = ({ open, onClose, onSave }) => {
   const [title, setTitle] = useState("");
-  const [products, setProducts] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
 
   const handleClose = () => {
     onClose();
   };
 
+  const generateId = () => {
+    const min = 1000;
+    const max = 9999;
+    const id = Math.floor(Math.random() * (max - min + 1)) + min;
+    return id.toString();
+  };
+
   const handleSave = () => {
     const newVitrine = {
-      id: uuidv4(),
+      id: generateId(),
       title: title,
-      products: products,
+      price: price,
+      description: description,
+      image: "https://i.pravatar.cc",
+      category: category,
     };
 
-    console.log("Saving new vitrine:", newVitrine); // Log the new vitrine
+    console.log("Saving new vitrine:", newVitrine);
 
-    fetch("https://fakestoreapi.com/products", {
-      method: "POST",
-      body: JSON.stringify(newVitrine),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        console.log("Response from API:", json); // Log the response
-        onSave(json);
-        handleClose();
-      })
-      .catch((error) => {
-        console.error("Error saving vitrine:", error); // Log any errors
-      });
+    onSave(newVitrine);
+
+    handleClose();
   };
 
   return (
@@ -79,7 +79,7 @@ export default function AddModal({ open, onClose, onSave }) {
       </IconButton>
       <DialogContent dividers>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <TextField
               id="outlined-basic"
               label="Título"
@@ -90,15 +90,37 @@ export default function AddModal({ open, onClose, onSave }) {
               onChange={(e) => setTitle(e.target.value)}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
+            <TextField
+              id="outlined-basic"
+              label="Preço"
+              variant="outlined"
+              required
+              fullWidth
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              id="outlined-basic"
+              label="Descrição"
+              variant="outlined"
+              required
+              fullWidth
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={6}>
             <TextField
               id="outlined-basic"
               label="Produtos"
               variant="outlined"
               required
               fullWidth
-              value={products}
-              onChange={(e) => setProducts(e.target.value)}
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
             />
           </Grid>
         </Grid>
@@ -110,4 +132,6 @@ export default function AddModal({ open, onClose, onSave }) {
       </DialogActions>
     </BootstrapDialog>
   );
-}
+};
+
+export default AddModal;

@@ -28,42 +28,59 @@ const AddShowcase = () => {
     setIsModalOpen(false);
   };
 
-  const handleSave = (newVitrine) => {
-    const updatedVitrines = [...vitrines, newVitrine];
+  const handleUpdate = (vitrineId, updatedData) => {
+    const updatedVitrines = vitrines.map((vitrine) =>
+      vitrine.id === vitrineId ? { ...vitrine, ...updatedData } : vitrine
+    );
     setVitrines(updatedVitrines);
     localStorage.setItem("vitrines", JSON.stringify(updatedVitrines));
-    console.log("Updated vitrines:", updatedVitrines); // Log the updated vitrines
+  };
+
+  const handleAdd = (newVitrineData) => {
+    setVitrines([...vitrines, newVitrineData]);
+    localStorage.setItem(
+      "vitrines",
+      JSON.stringify([...vitrines, newVitrineData])
+    );
   };
 
   useEffect(() => {
     const storedVitrines = JSON.parse(localStorage.getItem("vitrines")) || [];
     setVitrines(storedVitrines);
-    console.log("Loaded vitrines from localStorage:", storedVitrines); // Log loaded vitrines
   }, []);
 
   return (
     <div>
       <h2>Vitrines</h2>
-      {vitrines.map((vitrine, index) => (
-        <div className="showCase" key={vitrine.id}> {/* Use the unique id as key */}
+      {vitrines.map((vitrine) => (
+        <div className="showCase" key={vitrine.id}>
           <div>
             <PiListThin />
           </div>
           <div className="showCaseDescription">
             <p>
-              {vitrine.id}
-              {vitrine.title} <br />
-              vitrine
+              ({vitrine.id}){vitrine.products}
+              {vitrine.title}
             </p>
           </div>
           <div className="editIcons">
-            <MdEdit onClick={openModal} />
+            <MdEdit
+              onClick={() =>
+                openModal(vitrine.id, vitrine.title, vitrine.products)
+              }
+            />
             <GrDirections />
             <MdOutlineClose />
           </div>
         </div>
       ))}
-      {isModalOpen && <EditModal open={isModalOpen} onClose={closeModal} />}
+      {isModalOpen && (
+        <EditModal
+          open={isModalOpen}
+          onClose={closeModal}
+          onUpdate={handleUpdate}
+        />
+      )}
       <button className="addShowcase" onClick={handleAddShowcase}>
         + Adicionar Vitrine
       </button>
@@ -71,7 +88,7 @@ const AddShowcase = () => {
         <AddModal
           open={isAddModalOpen}
           onClose={closeHandleAddShowcase}
-          onSave={handleSave}
+          onSave={handleAdd}
         />
       )}
     </div>
