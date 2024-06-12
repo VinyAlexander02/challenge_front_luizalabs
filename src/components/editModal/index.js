@@ -48,6 +48,7 @@ export default function editModal({ open, onClose }) {
       </IconButton>
       <DialogContent dividers>
         <Grid container spacing={2}>
+          <p style={{fontSize: '12px', margin: '5px 20px', color: 'gray'}}> Codigo da vitrine: 21</p>
           <Grid item xs={12}>
             <TextField
               id="outlined-basic"
