@@ -11,6 +11,7 @@ const AddShowcase = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAddModalOpen, setAddModalOpen] = useState(false);
   const [vitrines, setVitrines] = useState([]);
+  const [selectedVitrine, setSelectedVitrine] = useState(null);
 
   const handleAddShowcase = () => {
     setAddModalOpen(true);
@@ -20,28 +21,28 @@ const AddShowcase = () => {
     setAddModalOpen(false);
   };
 
-  const openModal = () => {
+  const openModal = (vitrine) => {
+    setSelectedVitrine(vitrine);
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setSelectedVitrine(null);
   };
 
-  const handleUpdate = (vitrineId, updatedData) => {
+  const handleUpdate = (updatedData) => {
     const updatedVitrines = vitrines.map((vitrine) =>
-      vitrine.id === vitrineId ? { ...vitrine, ...updatedData } : vitrine
+      vitrine.id === updatedData.id ? { ...vitrine, ...updatedData } : vitrine
     );
     setVitrines(updatedVitrines);
     localStorage.setItem("vitrines", JSON.stringify(updatedVitrines));
   };
 
   const handleAdd = (newVitrineData) => {
-    setVitrines([...vitrines, newVitrineData]);
-    localStorage.setItem(
-      "vitrines",
-      JSON.stringify([...vitrines, newVitrineData])
-    );
+    const updatedVitrines = [...vitrines, newVitrineData];
+    setVitrines(updatedVitrines);
+    localStorage.setItem("vitrines", JSON.stringify(updatedVitrines));
   };
 
   useEffect(() => {
@@ -59,16 +60,12 @@ const AddShowcase = () => {
           </div>
           <div className="showCaseDescription">
             <p>
-              ({vitrine.id}){vitrine.products}
+              ({vitrine.id}) {vitrine.category} <br />
               {vitrine.title}
             </p>
           </div>
           <div className="editIcons">
-            <MdEdit
-              onClick={() =>
-                openModal(vitrine.id, vitrine.title, vitrine.products)
-              }
-            />
+            <MdEdit onClick={() => openModal(vitrine)} />
             <GrDirections />
             <MdOutlineClose />
           </div>
@@ -79,6 +76,7 @@ const AddShowcase = () => {
           open={isModalOpen}
           onClose={closeModal}
           onUpdate={handleUpdate}
+          vitrine={selectedVitrine}
         />
       )}
       <button className="addShowcase" onClick={handleAddShowcase}>

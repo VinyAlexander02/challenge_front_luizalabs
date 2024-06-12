@@ -18,54 +18,41 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function EditModal({
-  open,
-  onClose,
-  vitrineId,
-  vitrineTitle,
-  vitrineProduct,
-  onUpdate,
-}) {
-  const [title, setTitle] = useState(vitrineTitle);
-  const [product, setProduct] = useState(vitrineProduct);
+const EditModal = ({ open, onClose, onUpdate, vitrine }) => {
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
 
   useEffect(() => {
-    setTitle(vitrineTitle);
-    setProduct(vitrineProduct);
-  }, [vitrineId, vitrineTitle, vitrineProduct]);
+    if (vitrine) {
+      setTitle(vitrine.title || "");
+      setPrice(vitrine.price || "");
+      setDescription(vitrine.description || "");
+      setCategory(vitrine.category || "");
+    }
+  }, [vitrine]);
 
-  const handleSave = () => {
-    const updatedVitrine = {
-      title: title,
-      products: product,
-    };
-
-    onUpdate(vitrineId, updatedVitrine);
-
+  const handleClose = () => {
     onClose();
   };
 
-  const handleUpdate = (vitrineId, updatedData) => {
-    fetch(`https://fakestoreapi.com/products/${vitrineId}`, {
-      method: "PUT",
-      body: JSON.stringify(updatedData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((updatedVitrine) => {
-        console.log("Vitrine atualizada:", updatedVitrine);
-        // Aqui você pode adicionar lógica para atualizar a vitrine na tela ou no localStorage, se necessário
-      })
-      .catch((error) => {
-        console.error("Erro ao atualizar vitrine:", error);
-      });
+  const handleSave = () => {
+    const updatedVitrine = {
+      id: vitrine.id,
+      title,
+      price,
+      description,
+      category,
+    };
+
+    onUpdate(updatedVitrine);
+    handleClose();
   };
 
   return (
     <BootstrapDialog
-      onClose={onClose}
+      onClose={handleClose}
       aria-labelledby="customized-dialog-title"
       open={open}
       fullWidth
@@ -76,7 +63,7 @@ export default function EditModal({
       </DialogTitle>
       <IconButton
         aria-label="close"
-        onClick={onClose}
+        onClick={handleClose}
         sx={{
           position: "absolute",
           left: 8,
@@ -87,10 +74,13 @@ export default function EditModal({
         <ArrowBackIcon />
       </IconButton>
       <DialogContent dividers>
+        <p style={{ fontSize: "12px", color: "gray", marginBottom: "15px" }}>
+          Código da Vitrine: {vitrine && vitrine.id}
+        </p>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <TextField
-              id="outlined-basic"
+              id="title"
               label="Título"
               variant="outlined"
               required
@@ -99,15 +89,37 @@ export default function EditModal({
               onChange={(e) => setTitle(e.target.value)}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <TextField
-              id="outlined-basic"
-              label="Produto"
+              id="price"
+              label="Preço"
               variant="outlined"
               required
               fullWidth
-              value={product}
-              onChange={(e) => setProduct(e.target.value)}
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              id="description"
+              label="Descrição"
+              variant="outlined"
+              required
+              fullWidth
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              id="category"
+              label="Produtos"
+              variant="outlined"
+              required
+              fullWidth
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
             />
           </Grid>
         </Grid>
@@ -119,4 +131,6 @@ export default function EditModal({
       </DialogActions>
     </BootstrapDialog>
   );
-}
+};
+
+export default EditModal;
