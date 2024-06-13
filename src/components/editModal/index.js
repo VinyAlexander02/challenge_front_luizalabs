@@ -22,14 +22,14 @@ const EditModal = ({ open, onClose, onUpdate, vitrine }) => {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
+  const [products, setProducts] = useState("");
 
   useEffect(() => {
     if (vitrine) {
       setTitle(vitrine.title || "");
       setPrice(vitrine.price || "");
       setDescription(vitrine.description || "");
-      setCategory(vitrine.category || "");
+      setProducts(vitrine.products || "");
     }
   }, [vitrine]);
 
@@ -43,7 +43,7 @@ const EditModal = ({ open, onClose, onUpdate, vitrine }) => {
       title,
       price,
       description,
-      category,
+      products,
     };
 
     onUpdate(updatedVitrine);
@@ -113,13 +113,13 @@ const EditModal = ({ open, onClose, onUpdate, vitrine }) => {
           </Grid>
           <Grid item xs={6}>
             <TextField
-              id="category"
+              id="products"
               label="Produtos"
               variant="outlined"
               required
               fullWidth
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              value={products}
+              onChange={(e) => setProducts(e.target.value)}
             />
           </Grid>
         </Grid>

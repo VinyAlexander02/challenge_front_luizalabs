@@ -1,5 +1,3 @@
-// AddModal.js
-
 import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
@@ -24,7 +22,7 @@ const AddModal = ({ open, onClose, onSave }) => {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
+  const [products, setProducts] = useState("");
 
   const handleClose = () => {
     onClose();
@@ -44,7 +42,7 @@ const AddModal = ({ open, onClose, onSave }) => {
       price: price,
       description: description,
       image: "https://i.pravatar.cc",
-      category: category,
+      products: products,
     };
 
     console.log("Saving new vitrine:", newVitrine);
@@ -119,8 +117,8 @@ const AddModal = ({ open, onClose, onSave }) => {
               variant="outlined"
               required
               fullWidth
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              value={products}
+              onChange={(e) => setProducts(e.target.value)}
             />
           </Grid>
         </Grid>

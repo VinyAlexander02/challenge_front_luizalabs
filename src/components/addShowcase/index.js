@@ -45,6 +45,14 @@ const AddShowcase = () => {
     localStorage.setItem("vitrines", JSON.stringify(updatedVitrines));
   };
 
+  const handleDelete = (vitrineId) => {
+    const updatedVitrines = vitrines.filter(
+      (vitrine) => vitrine.id !== vitrineId
+    );
+    setVitrines(updatedVitrines);
+    localStorage.setItem("vitrines", JSON.stringify(updatedVitrines));
+  };
+
   useEffect(() => {
     const storedVitrines = JSON.parse(localStorage.getItem("vitrines")) || [];
     setVitrines(storedVitrines);
@@ -60,14 +68,14 @@ const AddShowcase = () => {
           </div>
           <div className="showCaseDescription">
             <p>
-              ({vitrine.id}) {vitrine.category} <br />
-              {vitrine.title}
+              ({vitrine.id}) {vitrine.title} <br />
+              Vitrine
             </p>
           </div>
           <div className="editIcons">
             <MdEdit onClick={() => openModal(vitrine)} />
             <GrDirections />
-            <MdOutlineClose />
+            <MdOutlineClose onClick={() => handleDelete(vitrine.id)} />
           </div>
         </div>
       ))}
