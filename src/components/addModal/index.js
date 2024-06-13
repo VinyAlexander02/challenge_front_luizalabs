@@ -8,6 +8,8 @@ import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Grid, TextField } from "@mui/material";
+import validateProductIds from "../products"; 
+import swal from "sweetalert";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -23,33 +25,44 @@ const AddModal = ({ open, onClose, onSave }) => {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [products, setProducts] = useState("");
+  const [error, setError] = useState("");
 
   const handleClose = () => {
     onClose();
   };
 
+  const handleSave = async () => {
+    const validationResult = await validateProductIds(products);
+
+    if (!validationResult.isValid) {
+      setError(
+        `IDs inválidos encontrados: ${validationResult.invalidIds.join(", ")}`
+      );
+      swal(
+        "OPS!",
+        `Os seguintes IDs são inválidos: ${validationResult.invalidIds.join(", ")}`,
+        "error"
+      );
+      return;
+    }
+
+    const newVitrine = {
+      id: generateId(),
+      title,
+      price,
+      description,
+      image: "https://i.pravatar.cc",
+      products,
+    };
+
+    onSave(newVitrine);
+    handleClose();
+  };
+
   const generateId = () => {
     const min = 1000;
     const max = 9999;
-    const id = Math.floor(Math.random() * (max - min + 1)) + min;
-    return id.toString();
-  };
-
-  const handleSave = () => {
-    const newVitrine = {
-      id: generateId(),
-      title: title,
-      price: price,
-      description: description,
-      image: "https://i.pravatar.cc",
-      products: products,
-    };
-
-    console.log("Saving new vitrine:", newVitrine);
-
-    onSave(newVitrine);
-
-    handleClose();
+    return (Math.floor(Math.random() * (max - min + 1)) + min).toString();
   };
 
   return (
@@ -119,6 +132,8 @@ const AddModal = ({ open, onClose, onSave }) => {
               fullWidth
               value={products}
               onChange={(e) => setProducts(e.target.value)}
+              error={!!error}
+              helperText={error}
             />
           </Grid>
         </Grid>

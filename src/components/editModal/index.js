@@ -8,6 +8,8 @@ import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Grid, TextField } from "@mui/material";
+import validateProductIds from "../products";
+import swal from "sweetalert";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -23,6 +25,7 @@ const EditModal = ({ open, onClose, onUpdate, vitrine }) => {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [products, setProducts] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (vitrine) {
@@ -37,7 +40,15 @@ const EditModal = ({ open, onClose, onUpdate, vitrine }) => {
     onClose();
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    const validation = await validateProductIds(products);
+
+    if (!validation.isValid) {
+      setErrorMessage(`Os seguintes IDs são inválidos: ${validation.invalidIds.join(', ')}`);
+      swal('OPS!', `Os seguintes IDs são inválidos: ${validation.invalidIds.join(', ')}`, 'error')
+      return;
+    }
+
     const updatedVitrine = {
       id: vitrine.id,
       title,
@@ -123,6 +134,9 @@ const EditModal = ({ open, onClose, onUpdate, vitrine }) => {
             />
           </Grid>
         </Grid>
+        {errorMessage && (
+          <p style={{ color: 'red' }}>{errorMessage}</p>
+        )}
       </DialogContent>
       <DialogActions>
         <Button autoFocus onClick={handleSave}>
