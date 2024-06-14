@@ -24,7 +24,6 @@ h2 {
 }
 
 .addShowcase {
-<<<<<<< HEAD
   position: absolute;
   right: 10px;
   bottom: 10px;
@@ -35,16 +34,3 @@ h2 {
   border-radius: 10px;
   cursor: pointer;
 }
-=======
-    position: absolute;
-    right: 10px; 
-    bottom: 10px; 
-    padding: 10px 20px;
-    background-color: #38db81;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-  }
-  
->>>>>>> b44feff (Implement the navbar and chage the button to add a new showcase)
