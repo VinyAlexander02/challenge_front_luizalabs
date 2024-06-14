@@ -4,8 +4,13 @@ import { PiListThin } from "react-icons/pi";
 import { MdEdit } from "react-icons/md";
 import { GrDirections } from "react-icons/gr";
 import { MdOutlineClose } from "react-icons/md";
+<<<<<<< HEAD
 import EditModal from "../editModal";
 import AddModal from "../addModal";
+=======
+import EditModal from "../modal";
+import { useNavigate } from "react-router-dom";
+>>>>>>> b44feff (Implement the navbar and chage the button to add a new showcase)
 
 const AddShowcase = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,8 +26,18 @@ const AddShowcase = () => {
     setAddModalOpen(false);
   };
 
+<<<<<<< HEAD
   const openModal = (vitrine) => {
     setSelectedVitrine(vitrine);
+=======
+  const navigate = useNavigate();
+
+  const handleAddShowcase = () => {
+    navigate("/add-showcase");
+  };
+
+  const openModal = () => {
+>>>>>>> b44feff (Implement the navbar and chage the button to add a new showcase)
     setIsModalOpen(true);
   };
 
@@ -61,6 +76,7 @@ const AddShowcase = () => {
   return (
     <div>
       <h2>Vitrines</h2>
+<<<<<<< HEAD
       {vitrines.map((vitrine) => (
         <div className="showCase" key={vitrine.id}>
           <div>
@@ -96,7 +112,59 @@ const AddShowcase = () => {
           onClose={closeHandleAddShowcase}
           onSave={handleAdd}
         />
+=======
+      <div className="showCase">
+        <div>
+          <PiListThin />
+        </div>
+        <div className="showCaseDescription">
+          <p>(2279) Sugestões com base no seu interesse <br/> Vitrine</p>
+        </div>
+        <div className="editIcons">
+          <MdEdit onClick={openModal} />
+          <GrDirections />
+          <MdOutlineClose />
+        </div>
+      </div>
+      {isModalOpen && (
+        <EditModal open={isModalOpen} onClose={closeModal}/>
+        // <div className="modal">
+        //   <div className="modal-content">
+        //     <span className="close" onClick={closeModal}>
+        //       &times;
+        //     </span>
+        //     <form onSubmit={handleSubmit}>
+        //       <div className="modalName">
+        //         <label htmlFor="name">Nome:</label>
+        //         <input
+        //           type="text"
+        //           id="name"
+        //           name="name"
+        //           value={formData.name}
+        //           onChange={handleChange}
+        //           required
+        //         />
+        //       </div>
+        //       <div>
+        //         <label htmlFor="description">Descrição:</label>
+        //         <textarea
+        //           id="description"
+        //           name="description"
+        //           value={formData.description}
+        //           onChange={handleChange}
+        //           required
+        //         ></textarea>
+        //       </div>
+        //       {/* Adicione outros campos conforme necessário */}
+        //       <button type="submit">Salvar</button>
+        //     </form>
+        //   </div>
+        // </div>
+>>>>>>> b44feff (Implement the navbar and chage the button to add a new showcase)
       )}
+      <button className="addShowcase" onClick={handleAddShowcase}>
+          + Adicionar Vitrine
+        </button>
     </div>
   );
 };
