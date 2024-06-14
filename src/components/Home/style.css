@@ -63,40 +63,4 @@ img {
   display: block;
   margin-left: auto;
   margin-right: auto;
-<<<<<<< HEAD
 }
-=======
-}
-
-.product p {
-  margin: 5px 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 18px;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.scroll-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(255, 255, 255, 0.5);
-  color: #00bfff;
-  border: none;
-  cursor: pointer;
-  padding: 10px;
-  font-size: 20px;
-  z-index: 1;
-}
-
-.left {
-  left: 0;
-}
-
-.right {
-  right: 0;
-}
-
-
->>>>>>> b44feff (Implement the navbar and chage the button to add a new showcase)

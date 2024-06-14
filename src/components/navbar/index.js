@@ -34,11 +34,7 @@ function Navbar() {
   };
 
   return (
-<<<<<<< HEAD
     <AppBar position="static" style={{backgroundColor: '#00BFFF'}}>
-=======
-    <AppBar position="static">
->>>>>>> b44feff (Implement the navbar and chage the button to add a new showcase)
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
