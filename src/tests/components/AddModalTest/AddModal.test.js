@@ -40,39 +40,39 @@ describe("AddModal", () => {
     expect(onCloseMock).toHaveBeenCalledTimes(1);
   });
 
-  // it("should call onSave with correct data when valid", async () => {
-  //   validateProductIds.mockResolvedValueOnce({ isValid: true, invalidIds: [] });
+  it("should call onSave with correct data when valid", async () => {
+    validateProductIds.mockResolvedValueOnce({ isValid: true, invalidIds: [] });
 
-  //   render(<AddModal open={true} onClose={onCloseMock} onSave={onSaveMock} />);
+    render(<AddModal open={true} onClose={onCloseMock} onSave={onSaveMock} />);
 
-  //   fireEvent.change(screen.getByLabelText(/Título/i), {
-  //     target: { value: "Test Title" },
-  //   });
-  //   fireEvent.change(screen.getByLabelText(/Preço/i), {
-  //     target: { value: "100" },
-  //   });
-  //   fireEvent.change(screen.getByLabelText(/Descrição/i), {
-  //     target: { value: "Test Description" },
-  //   });
-  //   fireEvent.change(screen.getByLabelText(/Produtos/i), {
-  //     target: { value: "123, 456" },
-  //   });
+    fireEvent.change(screen.getByLabelText(/Título/i), {
+      target: { value: "Test Title" },
+    });
+    fireEvent.change(screen.getByLabelText(/Preço/i), {
+      target: { value: "100" },
+    });
+    fireEvent.change(screen.getByLabelText(/Descrição/i), {
+      target: { value: "Test Description" },
+    });
+    fireEvent.change(screen.getByLabelText(/Produtos/i), {
+      target: { value: "123, 456" },
+    });
 
-  //   fireEvent.click(screen.getByText(/Salvar/i));
+    fireEvent.click(screen.getByText(/Salvar/i));
 
-  //   await waitFor(() => {
-  //     expect(onSaveMock).toHaveBeenCalledWith(
-  //       expect.objectContaining({
-  //         title: "Test Title",
-  //         price: "100",
-  //         description: "Test Description",
-  //         products: "123, 456",
-  //       })
-  //     );
-  //   });
+    await waitFor(() => {
+      expect(onSaveMock).toHaveBeenCalledWith(
+        expect.objectContaining({
+          title: "Test Title",
+          price: "100",
+          description: "Test Description",
+          products: "123, 456",
+        })
+      );
+    });
 
-  //   expect(onCloseMock).toHaveBeenCalledTimes(1);
-  // });
+    expect(onCloseMock).toHaveBeenCalledTimes(1);
+  });
 
   test("should display error message for invalid product IDs", async () => {
     validateProductIds.mockResolvedValueOnce({
@@ -97,17 +97,17 @@ describe("AddModal", () => {
     );
   });
 
-  // test("should handle empty fields", () => {
-  //   const onCloseMock = jest.fn();
-  //   const onSaveMock = jest.fn();
-  //   render(<AddModal open={true} onClose={onCloseMock} onSave={onSaveMock} />);
+  test("should handle empty fields", () => {
+    const onCloseMock = jest.fn();
+    const onSaveMock = jest.fn();
+    render(<AddModal open={true} onClose={onCloseMock} onSave={onSaveMock} />);
 
-  //   fireEvent.click(screen.getByText(/Salvar/i));
+    fireEvent.click(screen.getByText(/Salvar/i));
 
-  //   expect(onSaveMock).not.toHaveBeenCalled();
-  //   expect(screen.getByLabelText(/Título/i)).toHaveValue("");
-  //   expect(screen.getByLabelText(/Preço/i)).toHaveValue("");
-  //   expect(screen.getByLabelText(/Descrição/i)).toHaveValue("");
-  //   expect(screen.getByLabelText(/Produtos/i)).toHaveValue("");
-  // });
+    expect(onSaveMock).not.toHaveBeenCalled();
+    expect(screen.getByLabelText(/Título/i)).toHaveValue("");
+    expect(screen.getByLabelText(/Preço/i)).toHaveValue("");
+    expect(screen.getByLabelText(/Descrição/i)).toHaveValue("");
+    expect(screen.getByLabelText(/Produtos/i)).toHaveValue("");
+  });
 });

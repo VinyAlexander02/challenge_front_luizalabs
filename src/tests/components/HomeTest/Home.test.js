@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Home from '../components/Home'
+import Home from '../../../components/Home'
 import StarRating from '../../assets/starRating';
 
 global.fetch = jest.fn(() =>

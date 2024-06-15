@@ -1,7 +1,7 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor, act } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import EditModal from "../../../components/editModal";
-import AddShowcase from '../../../components/addShowcase'
+import AddShowcase from "../../../components/addShowcase";
 import validateProductIds from "../../../components/products";
 import swal from "sweetalert";
 
@@ -27,15 +27,16 @@ describe("Edit Modal", () => {
   });
 
   it("should render the modal with 'Editar Vitrine' message", () => {
-    render(
-      <EditModal
-        open={true}
-        onClose={onClose}
-        onUpdate={onUpdate}
-        vitrine={vitrine}
-      />
-    );
-    
+    act(() => {
+      render(
+        <EditModal
+          open={true}
+          onClose={onClose}
+          onUpdate={onUpdate}
+          vitrine={vitrine}
+        />
+      );
+    });
     expect(screen.getByText(/Editar Vitrine/i)).toBeInTheDocument();
   });
 
