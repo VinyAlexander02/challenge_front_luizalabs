@@ -1,8 +1,8 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
-import AddModal from "./components/addModal";
-import validateProductIds from "./components/products";
+import AddModal from "../../../components/addModal";
+import validateProductIds from "../../../components/products";
 import swal from "sweetalert";
 
 jest.mock("./components/products"); // Mock the module correctly

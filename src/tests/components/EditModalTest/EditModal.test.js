@@ -1,11 +1,12 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import EditModal from "./components/EditModal";
-import validateProductIds from "./components/products";
+import EditModal from "../../../components/editModal";
+import AddShowcase from '../../../components/addShowcase'
+import validateProductIds from "../../../components/products";
 import swal from "sweetalert";
 
 // Mocking the validateProductIds function and swal
-jest.mock("./components/products");
+jest.mock("../../../components/products");
 jest.mock("sweetalert");
 
 describe("Edit Modal", () => {
@@ -34,6 +35,7 @@ describe("Edit Modal", () => {
         vitrine={vitrine}
       />
     );
+    
     expect(screen.getByText(/Editar Vitrine/i)).toBeInTheDocument();
   });
 

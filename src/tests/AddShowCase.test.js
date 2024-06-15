@@ -1,9 +1,9 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import AddShowcase from "./components/AddShowcase";
-import EditModal from "./components/editModal";
-import AddModal from "./components/addModal";
+import AddShowcase from "../components/AddShowcase";
+import EditModal from "../components/editModal";
+import AddModal from "../components/addModal";
 
 jest.mock("./components/editModal", () => jest.fn(() => null));
 jest.mock("./components/addModal", () => jest.fn(() => null));
