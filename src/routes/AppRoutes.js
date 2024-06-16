@@ -1,8 +1,8 @@
 // src/routes/AppRoutes.js
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Home from "../components/Home";
-import AddShowcase from "../components/addShowcase";
+import Home from "../pages/Home";
+import AddShowcase from "../pages/addShowcase";
 
 const AppRoutes = () => {
   return (

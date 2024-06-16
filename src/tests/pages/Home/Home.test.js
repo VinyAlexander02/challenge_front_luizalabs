@@ -2,10 +2,9 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Home from '../../../components/Home'
-import StarRating from '../../assets/starRating';
 
-global.fetch = jest.fn(() =>
-  Promise.resolve({
+global.fetch = () => ({
+  then: jest.fn().mockImplementation(() =>  Promise.resolve({
     json: () => Promise.resolve([
       {
         id: 1,
@@ -22,8 +21,8 @@ global.fetch = jest.fn(() =>
         rating: { rate: 4.0, count: 5 },
       },
     ]),
-  })
-);
+  }))
+});
 
 const mockVitrines = [
   {
@@ -42,7 +41,7 @@ afterEach(() => {
 });
 
 describe('Home', () => {
-  test('renders vitrines from localStorage and products from API', async () => {
+  it('renders vitrines from localStorage and products from API', async () => {
     render(<Home />);
 
     expect(screen.getByText('Vitrine 1')).toBeInTheDocument();
@@ -53,7 +52,7 @@ describe('Home', () => {
     });
   });
 
-  test('renders product details correctly', async () => {
+  it('renders product details correctly', async () => {
     render(<Home />);
 
     await waitFor(() => {
@@ -66,7 +65,7 @@ describe('Home', () => {
     });
   });
 
-  test('handles scroll buttons', async () => {
+  it('handles scroll buttons', async () => {
     render(<Home />);
 
     await waitFor(() => {

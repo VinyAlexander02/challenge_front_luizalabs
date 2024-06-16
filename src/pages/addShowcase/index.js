@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 import "./style.css";
 import { PiListThin } from "react-icons/pi";
 import { MdEdit } from "react-icons/md";
-import { GrDirections } from "react-icons/gr";
 import { MdOutlineClose } from "react-icons/md";
-import EditModal from "../editModal";
-import AddModal from "../addModal";
+import EditModal from "../../components/editModal";
+import AddModal from "../../components/addModal";
 
 const AddShowcase = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -62,20 +61,31 @@ const AddShowcase = () => {
     <div>
       <h2>Vitrines</h2>
       {vitrines.map((vitrine) => (
-        <div className="showCase" key={vitrine.id}>
+        <div
+          className="showCase"
+          key={vitrine.id}
+          data-testid={`showCase-${vitrine.id}`}
+        >
           <div>
             <PiListThin />
           </div>
           <div className="showCaseDescription">
             <p>
-              ({vitrine.id}) {vitrine.title} <br />
+              ( {vitrine.id} ) {vitrine.title} <br />
               Vitrine
             </p>
           </div>
           <div className="editIcons">
-            <MdEdit onClick={() => openModal(vitrine)} />
-            <GrDirections />
-            <MdOutlineClose onClick={() => handleDelete(vitrine.id)} />
+            <MdEdit
+              onClick={() => openModal(vitrine)}
+              data-testid="edit"
+              style={{ cursor: "pointer" }}
+            />
+            <MdOutlineClose
+              style={{ cursor: "pointer" }}
+              onClick={() => handleDelete(vitrine.id)}
+              data-testid="delete"
+            />
           </div>
         </div>
       ))}
@@ -87,7 +97,7 @@ const AddShowcase = () => {
           vitrine={selectedVitrine}
         />
       )}
-      <button className="addShowcase" onClick={handleAddShowcase}>
+      <button className="addShowcaseBtn" onClick={handleAddShowcase}>
         + Adicionar Vitrine
       </button>
       {isAddModalOpen && (
