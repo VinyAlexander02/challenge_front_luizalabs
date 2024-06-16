@@ -8,7 +8,7 @@ import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Grid, TextField } from "@mui/material";
-import validateProductIds from "../products"; 
+import validateProductIds from "../products";
 import swal from "sweetalert";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -22,8 +22,6 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 const AddModal = ({ open, onClose, onSave }) => {
   const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
   const [products, setProducts] = useState("");
   const [error, setError] = useState("");
 
@@ -32,6 +30,16 @@ const AddModal = ({ open, onClose, onSave }) => {
   };
 
   const handleSave = async () => {
+    if (title === "") {
+      swal("Ops!", "O campo título precisa ser preenchido", "error");
+      return;
+    }
+
+    if (products === "") {
+      swal("Ops!", "O campo produtos precisa ser preenchido", "error");
+      return;
+    }
+
     const validationResult = await validateProductIds(products);
 
     if (!validationResult.isValid) {
@@ -40,18 +48,19 @@ const AddModal = ({ open, onClose, onSave }) => {
       );
       swal(
         "OPS!",
-        `Os seguintes IDs são inválidos: ${validationResult.invalidIds.join(", ")}`,
+        `Os seguintes IDs são inválidos: ${validationResult.invalidIds.join(
+          ", "
+        )}`,
         "error"
       );
       return;
     }
 
+    setError("");
+
     const newVitrine = {
       id: generateId(),
       title,
-      price,
-      description,
-      image: "https://i.pravatar.cc",
       products,
     };
 
@@ -104,28 +113,6 @@ const AddModal = ({ open, onClose, onSave }) => {
           <Grid item xs={6}>
             <TextField
               id="outlined-basic"
-              label="Preço"
-              variant="outlined"
-              required
-              fullWidth
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              id="outlined-basic"
-              label="Descrição"
-              variant="outlined"
-              required
-              fullWidth
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              id="outlined-basic"
               label="Produtos"
               variant="outlined"
               required
@@ -134,6 +121,7 @@ const AddModal = ({ open, onClose, onSave }) => {
               onChange={(e) => setProducts(e.target.value)}
               error={!!error}
               helperText={error}
+              placeholder="ex: 1,2,3,4,5"
             />
           </Grid>
         </Grid>

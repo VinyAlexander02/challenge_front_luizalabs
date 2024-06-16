@@ -31,9 +31,11 @@ const Home = () => {
   };
 
   return (
-    <>
-      <div className="container">
-        {vitrines.map((vitrine, index) => (
+    <div className="container">
+      {vitrines.length === 0 ? (
+        <h1 style={{textAlign: 'center'}}>Nenhuma vitrine cadastrada</h1>
+      ) : (
+        vitrines.map((vitrine, index) => (
           <div key={vitrine.id} className="vitrine-container">
             <h3>{vitrine.title}</h3>
             <div
@@ -70,9 +72,9 @@ const Home = () => {
               &#10095;
             </button>
           </div>
-        ))}
-      </div>
-    </>
+        ))
+      )}
+    </div>
   );
 };
 

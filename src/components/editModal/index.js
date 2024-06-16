@@ -22,16 +22,12 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 const EditModal = ({ open, onClose, onUpdate, vitrine }) => {
   const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
   const [products, setProducts] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (vitrine) {
       setTitle(vitrine.title || "");
-      setPrice(vitrine.price || "");
-      setDescription(vitrine.description || "");
       setProducts(vitrine.products || "");
     }
   }, [vitrine]);
@@ -41,19 +37,29 @@ const EditModal = ({ open, onClose, onUpdate, vitrine }) => {
   };
 
   const handleSave = async () => {
+    if (title === "") {
+      swal("Ops!", "O campo título precisa ser preenchido", "error");
+      return;
+    }
+
+    if (products === "") {
+      swal("Ops!", "O campo produtos precisa ser preenchido", "error");
+      return;
+    }
+
     const validation = await validateProductIds(products);
 
     if (!validation.isValid) {
       setErrorMessage(`Os seguintes IDs são inválidos: ${validation.invalidIds.join(', ')}`);
-      swal('OPS!', `Os seguintes IDs são inválidos: ${validation.invalidIds.join(', ')}`, 'error')
+      swal('OPS!', `Os seguintes IDs são inválidos: ${validation.invalidIds.join(', ')}`, 'error');
       return;
     }
+
+    setErrorMessage(""); // Limpa qualquer erro anterior
 
     const updatedVitrine = {
       id: vitrine.id,
       title,
-      price,
-      description,
       products,
     };
 
@@ -102,28 +108,6 @@ const EditModal = ({ open, onClose, onUpdate, vitrine }) => {
           </Grid>
           <Grid item xs={6}>
             <TextField
-              id="price"
-              label="Preço"
-              variant="outlined"
-              required
-              fullWidth
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              id="description"
-              label="Descrição"
-              variant="outlined"
-              required
-              fullWidth
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
               id="products"
               label="Produtos"
               variant="outlined"
@@ -131,6 +115,7 @@ const EditModal = ({ open, onClose, onUpdate, vitrine }) => {
               fullWidth
               value={products}
               onChange={(e) => setProducts(e.target.value)}
+              placeholder='ex: 1,2,3,4,5'
             />
           </Grid>
         </Grid>

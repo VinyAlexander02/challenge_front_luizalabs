@@ -97,9 +97,6 @@ const AddShowcase = () => {
           onSave={handleAdd}
         />
       )}
-      <button className="addShowcase" onClick={handleAddShowcase}>
-          + Adicionar Vitrine
-        </button>
     </div>
   );
 };
