@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import Navbar from "../../../components/navbar";
-import { BrowserRouter, useNavigate } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import "@testing-library/jest-dom";
 import { waitFor } from "@testing-library/react";
 
@@ -37,15 +37,13 @@ describe("Navbar Test", () => {
     waitFor(() => expect(screen.getAllByText(/Vitrines/i)).toBeInTheDocument());
   });
 
-  it("Should call navigate when Vitrine button is click", async () => {
+  it("Should call navigate when Vitrine button is clicked", async () => {
     renderComponents();
 
-    const page = {
-      name: "/add-showcase",
-    };
-
-    const button = await waitFor(() => expect(screen.findByTitle(/Vitrines/i)));
+    const button = screen.queryAllByTestId('page-name');
     fireEvent.click(button);
-    waitFor(() => expect(mockNavigate).toHaveBeenCalledWith("/add-showcase"));
-  });
+
+    await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith("/add-showcase"));
+});
+
 });

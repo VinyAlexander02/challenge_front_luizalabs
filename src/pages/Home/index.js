@@ -7,11 +7,18 @@ const Home = () => {
   const [vitrines, setVitrines] = useState([]);
   const contentRefs = useRef([]);
 
+  const getProducts = async () => {
+    try {
+      const data = await fetch("https://fakestoreapi.com/products");
+      const jsonData = await data.json();
+      setProducts(jsonData);
+    } catch (error) {
+      console.error("Erro ao buscar produtos:", error);
+    }
+  };
+
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
-      .then((res) => res.json())
-      .then((json) => setProducts(json))
-      .catch((error) => console.error("Erro ao buscar produtos:", error));
+    getProducts();
   }, []);
 
   useEffect(() => {
@@ -25,15 +32,15 @@ const Home = () => {
 
   const getVitrineProducts = (productIds) => {
     return productIds
-      .split(',')
-      .map(id => products.find(product => product.id === parseInt(id)))
-      .filter(product => product);
+      .split(",")
+      .map((id) => products.find((product) => product.id === parseInt(id)))
+      .filter((product) => product);
   };
 
   return (
     <div className="container">
       {vitrines.length === 0 ? (
-        <h1 style={{textAlign: 'center'}}>Nenhuma vitrine cadastrada</h1>
+        <h1 style={{ textAlign: "center" }}>Nenhuma vitrine cadastrada</h1>
       ) : (
         vitrines.map((vitrine, index) => (
           <div key={vitrine.id} className="vitrine-container">
@@ -60,12 +67,14 @@ const Home = () => {
               ))}
             </div>
             <button
+              data-testid={`scroll-button-left-${vitrine.id}`}
               className="scroll-button left"
               onClick={() => handleScroll(index, -100)}
             >
               &#10094;
             </button>
             <button
+              data-testid={`scroll-button-right-${vitrine.id}`}
               className="scroll-button right"
               onClick={() => handleScroll(index, 100)}
             >
