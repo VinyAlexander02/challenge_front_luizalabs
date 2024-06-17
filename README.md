@@ -5,12 +5,10 @@ Material UI
 
 ## Project
 
-Projeto feito em reactJS de listar produtos em um e-commerce, onde é possível criar vitrines para a tela inicial e sendo possível inserir produto e retirar produtos das vitrines
-
+Este projeto utiliza ReactJS para listar produtos em um e-commerce. Ele oferece a capacidade de criar vitrines para a tela inicial e gerenciar a adição e remoção de produtos dessas vitrines.
 ## Versão do NODE
 
-Para poder rodar o projeto na maquina é preciso que o node esteja na versão 18.15.0 <br/>
-Para poder baixar o node pode acessar o site https://nodejs.org/en/download/package-manager
+Para executar este projeto em sua máquina, é necessário ter o Node.js instalado. Recomenda-se a versão 18.15.0. Você pode baixar o Node.js em: Node.js Download Page
 
 ## Instalação
 
@@ -31,7 +29,7 @@ Antes de iniciar a instalação é necessário ter o git instalado na maquina <b
 
 # Para instalar e iniciar o projeto rode os comandos abaixo:
 
-1. Para instalar as dependências do projeto, é preciso abrir o terminal da dua IDE e rodar o seguinte comando:
+1. Para instalar as dependências do projeto, é preciso abrir o terminal da sua IDE e rodar o seguinte comando:
 
 - npm install ou yarn install
 
