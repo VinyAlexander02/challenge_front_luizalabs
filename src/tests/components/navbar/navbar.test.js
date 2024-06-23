@@ -40,10 +40,10 @@ describe("Navbar Test", () => {
   it("Should call navigate when Vitrine button is clicked", async () => {
     renderComponents();
 
-    const button = screen.queryAllByTestId('page-name');
+    const button = screen.getByTestId('page-name-Vitrines');
     fireEvent.click(button);
 
     await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith("/add-showcase"));
-});
+  });
 
 });

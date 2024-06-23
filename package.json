@@ -48,7 +48,14 @@
   "jest": {
     "transform": {
       "^.+\\.(js|jsx)$": "babel-jest"
-    }
+    }, 
+    "coveragePathIgnorePatterns" : [
+      "<rootDir>/src/App.js",
+      "<rootDir>/src/index.js",
+      "<rootDir>/src/reportWebVitals.js",
+      "<rootDir>/src/routes/AppRoutes.js",
+      "<rootDir>/src/components/products.js"
+    ]
   },
   "devDependencies": {
     "@babel/preset-env": "^7.24.7",

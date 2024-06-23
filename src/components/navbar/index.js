@@ -88,8 +88,9 @@ function Navbar() {
                 <MenuItem
                   key={index}
                   onClick={() => handleMenuClick(page.path)}
+                  data-testid={`page-name-${page.name}`}
                 >
-                  <Typography textAlign="center" data-testid={`page-name`}>{page.name}</Typography>
+                  <Typography textAlign="center" >{page.name}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -118,7 +119,6 @@ function Navbar() {
                 key={index}
                 onClick={() => handleMenuClick(page.path)}
                 sx={{ my: 2, color: "white", display: "block" }}
-                data-testid={`page-name`}
               >
                 {page.name}
               </Button>
